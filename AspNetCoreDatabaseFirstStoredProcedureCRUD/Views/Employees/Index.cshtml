@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Employee>
+<p class="mt-3 mb-2">
+    <h4>Employee Skill Info</h4>
+</p>
+
+<h3>Employee List</h3>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Employee Name</th>
+            <th>Mobile No</th>
+            <th>Skill Name</th>
+            <th>
+                Join Date
+            </th>
+            <th>Active?</th>
+            <th>Modules</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@Url.Content("~/images/" + item.ImageUrl)" width="100px" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("/images/noimage.png")" width="100" />
+                    }
+                </td>
+                <td>@item.EmployeeName</td>
+                <td>@item.MobileNo</td>
+                <td>@item.Skill.SkillName</td>
+                <td>@item.JoinDate.ToShortDateString()</td>
+                <td>@(item.IsActive ? "Active" : "Not Active")</td>
+                <td>
+                    @foreach (var m in item.SkillModules)
+                    {
+                        <ul>
+                            <li>@m.ModuleName - @m.Duration</li>
+                        </ul>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Employees", new { id = item.EmployeeId })" class="btn btn-primary">Edit</a>
+                    <form method="post" action="@Url.Action("Delete", "Employees", new { id = item.EmployeeId })" onsubmit="return confirm('Are you sure to delete this record?')">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>
+    <a href="@Url.Action("Create", "Employees")" class="btn btn-primary">Create</a>
+</p>

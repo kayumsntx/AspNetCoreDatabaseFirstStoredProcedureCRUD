@@ -1,0 +1,43 @@
+﻿CREATE DATABASE spcoreDB;
+GO
+
+USE spcoreDB;
+GO
+
+CREATE TABLE Skill
+(
+    SkillId INT NOT NULL PRIMARY KEY IDENTITY(201, 1),
+    SkillName VARCHAR(10) NOT NULL
+);
+GO
+
+CREATE TABLE Employee
+(
+    EmployeeId INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+    EmployeeName VARCHAR(20) NOT NULL,
+    JoinDate DATETIME NOT NULL,
+    IsActive BIT NOT NULL,
+    MobileNo CHAR(11) NOT NULL,
+    SkillId INT NOT NULL REFERENCES Skill(SkillId) ON DELETE CASCADE,
+    SkillBudget DECIMAL(18, 2) NOT NULL,
+    ImageUrl VARCHAR(200) NULL
+);
+GO
+
+CREATE TABLE SkillModule
+(
+    SkillModuleId INT NOT NULL PRIMARY KEY IDENTITY(101, 1),
+    ModuleName VARCHAR(10) NOT NULL,
+    Duration INT NOT NULL,
+    EmployeeId INT NOT NULL REFERENCES Employee(EmployeeId) ON DELETE CASCADE
+);
+GO
+
+
+
+:::::::::::::::::::::::::::Scaffold:::::::::::::::::::::::::::::::::::::::::::
+
+Scaffold-DbContext "Server=(LocalDB)\MSSQLLocalDB; Database=spcoreDB; Trusted_Connection=True; TrustServerCertificate=True; Encrypt=False; MultipleActiveResultSets=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+
+::::::::::::::::::::::::::::::ForInsert SP::::::::::::::::::::::::::::::::::::::::::::::::::

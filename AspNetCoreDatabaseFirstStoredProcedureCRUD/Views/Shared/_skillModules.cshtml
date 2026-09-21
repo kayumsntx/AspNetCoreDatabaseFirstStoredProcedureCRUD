@@ -1,0 +1,30 @@
+﻿@model List<SkillModule>
+<table class="table table-bordered" id="modulesTable">
+    <thead>
+        <tr>
+            <th>Module Name</th>
+            <th>Duration</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" name="SkillModules[@i].SkillModuleId" value="0" />
+                        <input name="SkillModules[@(i)].ModuleName" value="@Model[i].ModuleName" class="form-control" />
+                    </td>
+                    <td>
+                        <input name="SkillModules[@(i)].Duration" value="@Model[i].Duration" class="form-control" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger removeModuleBtn">Remove</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
